@@ -81,3 +81,21 @@ test('reçoit les images partagées depuis une autre application', async ({ page
 	await expect(items(page).first()).toContainText('partage.webp');
 	await expect(items(page).first()).toContainText('192 × 192');
 });
+
+test('hors ligne : pages visitées disponibles, les autres renvoient vers l’accueil', async ({
+	page,
+	context
+}) => {
+	await openApp(page);
+	await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
+	await page.goto('/heic-en-jpg');
+	await expect(page.getByRole('heading', { level: 1 })).toContainText('HEIC en JPG');
+
+	await context.setOffline(true);
+	await page.reload();
+	await expect(page.getByRole('heading', { level: 1 })).toContainText('HEIC en JPG');
+
+	await page.goto('/svg-en-png');
+	await expect(page).toHaveURL(/\/$/);
+	await expect(page.getByRole('heading', { level: 1 })).toContainText('Convertisseur d’images');
+});

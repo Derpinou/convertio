@@ -36,10 +36,19 @@
 	});
 </script>
 
-<div class="space-y-6">
+<!--
+	Grand écran : réglages à gauche, fichiers à droite. Sans fichier, la zone de dépôt prend la
+	hauteur de la carte de réglages ; avec des fichiers, la carte reste visible au défilement.
+-->
+<div
+	class={[
+		'grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]',
+		converter.items.length ? 'lg:items-start' : 'lg:items-stretch'
+	]}
+>
 	<section
 		aria-label="Réglages de conversion"
-		class="space-y-6 rounded-lg bg-white p-4 shadow-xs outline-1 outline-gray-900/5 sm:p-6 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
+		class="space-y-6 rounded-lg bg-white p-4 shadow-xs outline-1 outline-gray-900/5 sm:p-6 lg:sticky lg:top-6 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
 	>
 		<FormatPicker />
 		<div class="border-t border-gray-200 pt-6 dark:border-white/10">
@@ -47,9 +56,11 @@
 		</div>
 	</section>
 
-	<DropZone onfiles={addFiles} />
+	<div class="flex min-w-0 flex-col gap-6">
+		<DropZone onfiles={addFiles} expanded={!converter.items.length} />
 
-	{#if converter.items.length}
-		<FileList />
-	{/if}
+		{#if converter.items.length}
+			<FileList />
+		{/if}
+	</div>
 </div>

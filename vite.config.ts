@@ -60,10 +60,10 @@ export default defineConfig({
 			injectRegister: false,
 			manifest: {
 				id: '/',
-				name: 'Convertio — convertisseur d’images',
+				name: 'Convertio — convertisseur d’images gratuit',
 				short_name: 'Convertio',
 				description:
-					'Convertissez vos images (HEIC, PNG, JPEG, WebP, AVIF…) directement dans votre navigateur, sans les envoyer sur un serveur.',
+					'Convertisseur d’images gratuit, sans pub ni inscription : HEIC, PNG, JPG, WebP, AVIF, SVG… directement dans votre navigateur, sans envoi sur un serveur.',
 				lang: 'fr',
 				dir: 'ltr',
 				start_url: '/',
@@ -122,9 +122,11 @@ export default defineConfig({
 			injectManifest: {
 				// Les codecs .wasm (plusieurs Mo) ne sont pas précachés : ils sont mis en cache
 				// à leur première utilisation (voir src/service-worker.ts).
+				// Seul l'accueil est précaché (il convertit tout) ; les autres pages sont mises en
+				// cache à la visite, pour ne pas alourdir l'installation à chaque nouvelle page.
 				globPatterns: [
 					'client/**/*.{js,css,ico,png,svg,webp,woff2,webmanifest}',
-					'prerendered/**/*.html'
+					'prerendered/pages/index.html'
 				],
 				// Seuls les jeux de caractères latins de la police sont utiles hors ligne.
 				globIgnores: [

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@fontsource-variable/inter';
+	import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { pwaInfo } from 'virtual:pwa-info';
@@ -20,6 +21,8 @@
 </script>
 
 <svelte:head>
+	<!-- Police préchargée : évite le décalage de mise en page au remplacement de la police (CLS). -->
+	<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 	{#if pwaInfo}
 		<link rel="manifest" href={pwaInfo.webManifest.href} />
 	{/if}
@@ -28,7 +31,7 @@
 <div class="flex min-h-full flex-col">
 	<Header />
 
-	<main class="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 sm:px-6 lg:px-8">
+	<main class="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
 		{@render children()}
 	</main>
 

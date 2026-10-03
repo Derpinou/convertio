@@ -2,7 +2,14 @@
 	import { ACCEPT } from '$lib/formats';
 	import Icon from './Icon.svelte';
 
-	let { onfiles }: { onfiles: (files: File[]) => void } = $props();
+	let {
+		onfiles,
+		expanded = false
+	}: {
+		onfiles: (files: File[]) => void;
+		/** Remplit la hauteur de sa colonne (grand écran, aucun fichier encore). */
+		expanded?: boolean;
+	} = $props();
 
 	let input: HTMLInputElement;
 	let dragging = $state(false);
@@ -65,7 +72,10 @@
 
 <label
 	for="file-upload"
-	class="group flex cursor-pointer justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white px-6 py-10 transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600 hover:border-indigo-400 hover:bg-indigo-50/40 sm:py-14 dark:border-white/15 dark:bg-white/[0.02] dark:hover:border-indigo-400 dark:hover:bg-indigo-500/5"
+	class={[
+		'group flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white px-6 py-10 transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600 hover:border-indigo-400 hover:bg-indigo-50/40 sm:py-14 dark:border-white/15 dark:bg-white/[0.02] dark:hover:border-indigo-400 dark:hover:bg-indigo-500/5',
+		expanded && 'lg:flex-1'
+	]}
 >
 	<div class="text-center">
 		<Icon

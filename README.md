@@ -92,10 +92,24 @@ Le service worker n’est actif qu’avec `pnpm build && pnpm preview`, pas en m
 
 ## SEO et images
 
-- **URL du site** : les URL canoniques, Open Graph, le sitemap et le robots.txt utilisent la
-  variable d’environnement `VITE_SITE_URL` (ex. `https://convertio.example.com`), lue au build.
-- **Pages de conversion** : le catalogue est dans `src/lib/seo/conversions.ts`. Ajouter une entrée
-  crée la page, l’ajoute au sitemap et au pied de page.
+- **URL du site** : `https://convertio.dromaderp.fr`, utilisée pour les URL canoniques, Open
+  Graph, le sitemap et le robots.txt (`src/lib/site.ts`). La variable d’environnement
+  `VITE_SITE_URL`, lue au build, permet de la remplacer (pour un fork, par exemple).
+- **Positionnement** : gratuit et sans pub. Chaque titre et chaque description contient
+  « gratuit » et « sans pub » ; les tests (`src/lib/seo/pages.test.ts`) le vérifient, avec les
+  longueurs (titre ≤ 60 caractères, description de 110 à 160) et l’absence de doublons.
+- **Pages indexées** (38) : l’accueil, une page « Convertir en… » par format de sortie
+  (`/convertir-en-jpg`…) et une page par conversion (`/heic-en-jpg`, `/jfif-en-jpg`…), chacune
+  avec texte propre, conseils, FAQ, fil d’Ariane et données structurées (WebSite,
+  WebApplication, BreadcrumbList, FAQPage). Le catalogue est dans `src/lib/seo/conversions.ts` :
+  ajouter une entrée crée la page et l’ajoute au sitemap, au `llms.txt` et au pied de page.
+- **`/llms.txt`** : résumé du site pour les moteurs de réponse IA (ChatGPT, Perplexity…).
+- **Exploration** : un test parcourt tout le site depuis le sitemap (statuts, H1 unique,
+  canoniques, JSON-LD, liens internes).
+- **Aperçu Discord** : en plus d’Open Graph, chaque page déclare un aperçu en composants Discord
+  (`src/lib/seo/discord.ts`) avec des boutons de conversion rapide. Limite : 3 000 octets et
+  40 composants, vérifiée par les tests. Discord garde les aperçus en cache environ 30 minutes ;
+  l’[Embed Debugger](https://discord.com/developers/embeds) montre ce que Discord lit.
 - **Bannière de partage** (`static/og-image.png`, 1200 × 630) : sa source est
   `assets/og-image.html`. `pnpm generate-assets` la rend avec Playwright, puis capture
   l’application (`static/screenshots/`) pour la fenêtre d’installation de la PWA.
@@ -112,8 +126,7 @@ Importer un dépôt_, puis dans _Settings → Build_ :
 - commande de build : `pnpm build`
 - commande de déploiement : `npx wrangler deploy` (valeur par défaut)
 - répertoire racine : vide
-- variables de build : `NODE_VERSION=22`, `PNPM_VERSION=11.20.0` et `VITE_SITE_URL` (URL publique
-  du site)
+- variables de build : `NODE_VERSION=22` et `PNPM_VERSION=11.20.0`
 
 Le nom du Worker doit correspondre au champ `name` de `wrangler.toml` (`convertio`).
 
@@ -124,7 +137,7 @@ pnpm exec wrangler login
 ```
 
 ```bash
-VITE_SITE_URL=https://convertio.example.com pnpm deploy:cf
+pnpm deploy:cf
 ```
 
 Pour le sous-domaine : _Workers & Pages → convertio → Settings → Domains & Routes → Add →

@@ -21,7 +21,9 @@ test('la page se charge sans erreur, isolée et protégée par la CSP', async ({
 	});
 	await page.reload();
 	await expect(page).toHaveTitle(/Convertio/);
-	await expect(page.getByRole('heading', { level: 1 })).toContainText('Convertissez vos images');
+	await expect(page.getByRole('heading', { level: 1 })).toContainText(
+		'Convertisseur d’images gratuit'
+	);
 	expect(await page.evaluate(() => crossOriginIsolated)).toBe(true);
 	await expect(page.locator('meta[http-equiv="content-security-policy"]')).toHaveAttribute(
 		'content',
