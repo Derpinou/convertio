@@ -1,7 +1,8 @@
 # Convertio
 
 Convertisseur d’images 100 % côté client (aucun serveur), SvelteKit statique déployé sur
-Cloudflare Pages, PWA. Voir README.md pour l’architecture.
+Cloudflare (Worker sans code serveur, Workers Static Assets, voir `wrangler.toml`), PWA. Voir
+README.md pour l’architecture.
 
 ## Commandes
 

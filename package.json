@@ -22,7 +22,7 @@
 		"test:e2e": "playwright test",
 		"generate-pwa-assets": "pwa-assets-generator",
 		"generate-assets": "pnpm build && node scripts/generate-assets.mjs",
-		"deploy:pages": "pnpm build && wrangler pages deploy"
+		"deploy:cf": "pnpm build && wrangler deploy"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.63.0",

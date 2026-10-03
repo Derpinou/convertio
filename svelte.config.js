@@ -8,8 +8,8 @@ const config = {
 	kit: {
 		version: { name: pkg.version },
 		// 100 % statique : tout est prérendu, aucun code serveur.
-		// `404.html` : servi par Cloudflare Pages (statut 404) pour toute URL inconnue. Sans ce
-		// fichier, Pages renverrait la page d'accueil avec un statut 200 (« soft 404 »).
+		// `404.html` : servi par Cloudflare avec un statut 404 pour toute URL inconnue
+		// (`not_found_handling` dans wrangler.toml), plutôt qu'une page d'accueil en 200.
 		adapter: adapter({ strict: true, fallback: '404.html' }),
 		// Le service worker est généré par @vite-pwa/sveltekit (src/service-worker.ts) et enregistré par nous.
 		serviceWorker: { register: false },

@@ -100,20 +100,22 @@ Le service worker n’est actif qu’avec `pnpm build && pnpm preview`, pas en m
   `assets/og-image.html`. `pnpm generate-assets` la rend avec Playwright, puis capture
   l’application (`static/screenshots/`) pour la fenêtre d’installation de la PWA.
 
-## Déploiement sur Cloudflare Pages
+## Déploiement sur Cloudflare
 
-Le site est entièrement statique : il suffit de publier le dossier `build/`. Le fichier
-`static/_headers` (copié dans `build/`) pose les en-têtes nécessaires.
+Le site est entièrement statique : il est publié comme un Worker sans code serveur
+(Workers Static Assets), configuré dans `wrangler.toml`. Le fichier `static/_headers` (copié dans
+`build/`) pose les en-têtes nécessaires ; les URL inconnues renvoient `404.html` avec un statut 404.
 
 **Intégration Git (recommandé)** - dans le tableau de bord Cloudflare : _Workers & Pages → Créer →
-Pages → Connecter à Git_, puis :
+Importer un dépôt_, puis dans _Settings → Build_ :
 
 - commande de build : `pnpm build`
-- dossier de sortie : `build`
-- variables d’environnement : `NODE_VERSION=22`, `PNPM_VERSION=11.20.0` et `VITE_SITE_URL`
-  (URL publique du site)
+- commande de déploiement : `npx wrangler deploy` (valeur par défaut)
+- répertoire racine : vide
+- variables de build : `NODE_VERSION=22`, `PNPM_VERSION=11.20.0` et `VITE_SITE_URL` (URL publique
+  du site)
 
-Chaque branche et pull request obtient alors une URL de prévisualisation.
+Le nom du Worker doit correspondre au champ `name` de `wrangler.toml` (`convertio`).
 
 **En ligne de commande** :
 
@@ -122,10 +124,11 @@ pnpm exec wrangler login
 ```
 
 ```bash
-pnpm deploy:pages
+VITE_SITE_URL=https://convertio.example.com pnpm deploy:cf
 ```
 
-Pour le sous-domaine : _Pages → convertio → Domaines personnalisés → Configurer un domaine_.
+Pour le sous-domaine : _Workers & Pages → convertio → Settings → Domains & Routes → Add →
+Custom domain_.
 
 ## Licences
 
