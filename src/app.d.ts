@@ -31,7 +31,7 @@ declare global {
 	}
 
 	interface ImportMetaEnv {
-		/** URL publique du site (ex. https://convertio.example.com), lue au build. */
+		/** Remplace l'URL publique du site (https://convertio.dromaderp.fr par défaut), lue au build. */
 		readonly VITE_SITE_URL?: string;
 	}
 }

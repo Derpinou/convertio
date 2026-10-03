@@ -41,7 +41,7 @@
 
 <section
 	aria-labelledby="files-heading"
-	class="overflow-hidden rounded-lg bg-white shadow-xs outline-1 outline-gray-900/5 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
+	class="@container overflow-hidden rounded-lg bg-white shadow-xs outline-1 outline-gray-900/5 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
 >
 	<div
 		class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-gray-200 px-4 py-4 sm:px-6 dark:border-white/10"

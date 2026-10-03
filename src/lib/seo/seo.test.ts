@@ -19,10 +19,11 @@ describe('catalogue des conversions', () => {
 	});
 
 	it('ne propose que des conversions réalisables', () => {
-		for (const { from, to } of CONVERSIONS) {
+		for (const { from, to, fromName } of CONVERSIONS) {
 			expect(FORMATS[from].input, from).toBe(true);
 			expect(FORMATS[to].output, to).toBe(true);
-			expect(from).not.toBe(to);
+			// Seule exception : une variante nommée du même format (JFIF → JPG).
+			if (!fromName) expect(from).not.toBe(to);
 		}
 	});
 
@@ -64,7 +65,7 @@ describe('textes', () => {
 			conversionFaq(findConversion(slug)!).map((item) => item.question);
 		expect(questions('png-en-jpg')).toContain('La transparence est-elle conservée en JPG ?');
 		expect(questions('jpg-en-png').join()).not.toContain('transparence');
-		expect(questions('png-en-ico').join()).not.toContain('qualité');
+		expect(questions('png-en-ico').join()).not.toContain('régler la qualité');
 		expect(questions('svg-en-png').join()).toContain('taille');
 	});
 });

@@ -7,7 +7,7 @@
 <header class="border-b border-gray-200 bg-white dark:border-white/10 dark:bg-gray-900">
 	<nav
 		aria-label="Navigation principale"
-		class="mx-auto flex max-w-3xl items-center justify-between gap-x-4 px-4 py-3 sm:px-6 lg:px-8"
+		class="mx-auto flex max-w-7xl items-center justify-between gap-x-4 px-4 py-3 sm:px-6 lg:px-8"
 	>
 		<a href="/" class="-m-1.5 flex items-center gap-x-2.5 p-1.5">
 			<img src="/favicon.svg" alt="" class="size-8" width="32" height="32" />

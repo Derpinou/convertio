@@ -34,7 +34,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		losslessOption: false,
 		alpha: false,
 		defaultQuality: 85,
-		description: 'Photos, compatible partout'
+		description: 'Lu partout'
 	},
 	png: {
 		id: 'png',
@@ -47,7 +47,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		lossy: false,
 		losslessOption: false,
 		alpha: true,
-		description: 'Sans perte, transparence'
+		description: 'Sans perte'
 	},
 	webp: {
 		id: 'webp',
@@ -61,7 +61,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		losslessOption: true,
 		alpha: true,
 		defaultQuality: 80,
-		description: 'Léger, idéal pour le web'
+		description: 'Idéal pour le web'
 	},
 	avif: {
 		id: 'avif',
@@ -75,7 +75,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		losslessOption: true,
 		alpha: true,
 		defaultQuality: 60,
-		description: 'Très compressé, plus lent'
+		description: 'Le plus léger'
 	},
 	jxl: {
 		id: 'jxl',
@@ -128,7 +128,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		lossy: false,
 		losslessOption: false,
 		alpha: true,
-		description: 'Favicon multi-tailles'
+		description: 'Favicon'
 	},
 	tiff: {
 		id: 'tiff',
@@ -141,7 +141,7 @@ export const FORMATS: Record<FormatId, FormatInfo> = {
 		lossy: false,
 		losslessOption: false,
 		alpha: true,
-		description: 'Impression, archivage'
+		description: 'Impression'
 	},
 	heic: {
 		id: 'heic',

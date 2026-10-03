@@ -1,6 +1,6 @@
 {
 	"name": "convertio",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"private": true,
 	"description": "Convertisseur de formats d'image 100 % local, dans le navigateur",
 	"license": "Apache-2.0",
@@ -22,7 +22,7 @@
 		"test:e2e": "playwright test",
 		"generate-pwa-assets": "pwa-assets-generator",
 		"generate-assets": "pnpm build && node scripts/generate-assets.mjs",
-		"deploy:pages": "pnpm build && wrangler pages deploy"
+		"deploy:cf": "pnpm build && wrangler deploy"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.63.0",

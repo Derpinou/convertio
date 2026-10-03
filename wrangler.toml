@@ -1,5 +1,12 @@
-# Configuration Cloudflare Pages (site 100 % statique).
-# Déploiement manuel : `pnpm deploy:pages` (nécessite `pnpm exec wrangler login`).
+# Cloudflare Workers, fichiers statiques uniquement (Workers Static Assets) : aucun code serveur.
+# Le build (`pnpm build`) produit `build/` ; Cloudflare le publie avec `npx wrangler deploy`.
+# `name` doit correspondre au nom du Worker dans le tableau de bord Cloudflare.
 name = "convertio"
-pages_build_output_dir = "build"
 compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./build"
+# URL inconnue : sert `build/404.html` avec un statut 404 (pas de « soft 404 »).
+not_found_handling = "404-page"
+# `/heic-en-jpg` sert `heic-en-jpg.html` ; `/heic-en-jpg.html` redirige vers `/heic-en-jpg`.
+html_handling = "drop-trailing-slash"

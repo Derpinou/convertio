@@ -1,7 +1,8 @@
 # Convertio
 
 Convertisseur d’images 100 % côté client (aucun serveur), SvelteKit statique déployé sur
-Cloudflare Pages, PWA. Voir README.md pour l’architecture.
+Cloudflare (Worker sans code serveur, Workers Static Assets, voir `wrangler.toml`), PWA. Voir
+README.md pour l’architecture.
 
 ## Commandes
 
@@ -23,10 +24,16 @@ moteur de conversion, le service worker ou l’interface ont changé.
   auto-hébergées.
 - Un format = une entrée dans `src/lib/formats.ts`, un décodeur WASM éventuel dans
   `convert/decode.ts`, un encodeur dans `convert/encode.ts`, un test aller-retour dans `tests/`.
+- Positionnement : gratuit et sans pub. Titres, descriptions et H1 sont centralisés dans
+  `src/lib/seo/pages.ts` ; `pages.test.ts` exige « gratuit » et « sans pub », titre ≤ 60
+  caractères, description de 110 à 160, aucun doublon. Ne jamais inventer d’avis ni de notes
+  dans les données structurées.
 - SEO : chaque page passe par `<Seo>` (titre, description, canonique, Open Graph, JSON-LD).
   Les pages de conversion viennent du catalogue `src/lib/seo/conversions.ts` (texte propre à
-  chaque couple dans `note`) ; les URL absolues dépendent de `VITE_SITE_URL`. Accorder les
+  chaque couple dans `note`) ; les URL absolues dérivent de `SITE_URL` (`src/lib/site.ts`). Accorder les
   articles avec `withArticle` (« l’AVIF », « le JPG »).
+- Aperçu Discord (`src/lib/seo/discord.ts`) : boutons de style lien uniquement, ≤ 3 000 octets et
+  ≤ 40 composants ; `discord.test.ts` valide chaque page selon la documentation Discord.
 - Images : modifier `assets/og-image.html` puis lancer `pnpm generate-assets` (bannière + captures
   PWA, recompressées avec OxiPNG) plutôt que d’éditer les PNG.
 

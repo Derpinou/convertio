@@ -69,7 +69,7 @@
 				{targetLabel}
 			</span>
 			{#if output}
-				<svg viewBox="0 0 2 2" class="hidden size-0.5 fill-current sm:block" aria-hidden="true"
+				<svg viewBox="0 0 2 2" class="hidden size-0.5 fill-current @md:block" aria-hidden="true"
 					><circle cx="1" cy="1" r="1" /></svg
 				>
 				<span>{formatBytes(item.size)} → {formatBytes(output.blob.size)}</span>
@@ -80,7 +80,7 @@
 						−{savings} %
 					</span>
 				{/if}
-				<span class="hidden sm:inline">{output.width} × {output.height}</span>
+				<span class="hidden @lg:inline">{output.width} × {output.height}</span>
 				{#if outdated}
 					<span
 						class="inline-flex items-center rounded-md bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-800 inset-ring inset-ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:inset-ring-yellow-400/20"
@@ -116,7 +116,7 @@
 				class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:inset-ring-white/5 dark:hover:bg-white/20"
 			>
 				<Icon name="arrow-down-tray-solid" class="size-4 text-gray-400" />
-				<span class="sr-only sm:not-sr-only">Télécharger</span>
+				<span class="sr-only @lg:not-sr-only">Télécharger</span>
 			</a>
 		{:else if item.status === 'error' && item.sourceFormat}
 			<button

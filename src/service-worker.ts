@@ -2,8 +2,8 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
+import { NavigationRoute, registerRoute, setCatchHandler } from 'workbox-routing';
+import { CacheFirst, NetworkFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 
 declare const self: ServiceWorkerGlobalScope & {
@@ -33,6 +33,22 @@ registerRoute(
 		cacheName: 'convertio-codecs',
 		plugins: [new ExpirationPlugin({ maxEntries: 60, purgeOnQuotaError: true })]
 	})
+);
+
+// Pages de conversion et de format : réseau d'abord, copie conservée pour le hors ligne.
+registerRoute(
+	new NavigationRoute(
+		new NetworkFirst({
+			cacheName: 'convertio-pages',
+			networkTimeoutSeconds: 4,
+			plugins: [new ExpirationPlugin({ maxEntries: 60, purgeOnQuotaError: true })]
+		})
+	)
+);
+
+// Hors ligne sur une page jamais visitée : retour à l'accueil (précaché), qui convertit tout.
+setCatchHandler(async ({ request }) =>
+	request.mode === 'navigate' ? Response.redirect('/', 302) : Response.error()
 );
 
 // « Partager vers Convertio » (Web Share Target) : on stocke les fichiers reçus,

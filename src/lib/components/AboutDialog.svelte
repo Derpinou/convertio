@@ -32,7 +32,11 @@
 			</div>
 		</dl>
 		<p>
-			Projet libre et gratuit,
+			100 % gratuit, sans publicité, sans compte et sans traceur : la conversion se faisant sur
+			votre appareil, Convertio n’a aucun serveur de calcul à financer.
+		</p>
+		<p>
+			Projet libre,
 			<a
 				href={REPOSITORY_URL}
 				target="_blank"
