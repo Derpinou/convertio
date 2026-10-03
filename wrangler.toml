@@ -1,0 +1,5 @@
+# Configuration Cloudflare Pages (site 100 % statique).
+# Déploiement manuel : `pnpm deploy:pages` (nécessite `pnpm exec wrangler login`).
+name = "convertio"
+pages_build_output_dir = "build"
+compatibility_date = "2026-10-01"
