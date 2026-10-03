@@ -3,6 +3,13 @@
 	import Icon from './Icon.svelte';
 
 	let { title, children }: { title: string; children: Snippet } = $props();
+
+	const promises = [
+		'100 % gratuit',
+		'Sans publicité',
+		'Sans inscription',
+		'Fichiers jamais envoyés'
+	];
 </script>
 
 <div class="mx-auto max-w-3xl py-10 text-center sm:py-14 lg:py-16">
@@ -16,10 +23,18 @@
 	>
 		{@render children()}
 	</p>
-	<p
-		class="mt-5 inline-flex items-center gap-x-1.5 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 inset-ring inset-ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:inset-ring-green-500/20"
+	<ul
+		role="list"
+		aria-label="Nos engagements"
+		class="mt-6 flex flex-wrap items-center justify-center gap-2"
 	>
-		<Icon name="lock-closed" class="size-4" />
-		Vos fichiers restent sur votre appareil
-	</p>
+		{#each promises as promise (promise)}
+			<li
+				class="inline-flex items-center gap-x-1.5 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 inset-ring inset-ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:inset-ring-green-500/20"
+			>
+				<Icon name="check-solid" class="size-4" />
+				{promise}
+			</li>
+		{/each}
+	</ul>
 </div>

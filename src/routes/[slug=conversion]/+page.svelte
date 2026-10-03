@@ -1,34 +1,49 @@
 <script lang="ts">
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+	import ConversionLinks from '$lib/components/ConversionLinks.svelte';
 	import ConverterApp from '$lib/components/ConverterApp.svelte';
 	import Faq from '$lib/components/Faq.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Seo from '$lib/components/Seo.svelte';
-	import { CONVERSIONS, conversionTitle, seoName } from '$lib/seo/conversions';
-	import { conversionDescription, conversionFaq, FORMAT_ABOUT } from '$lib/seo/copy';
-	import { breadcrumbs, faqPage } from '$lib/seo/jsonld';
+	import {
+		conversionTitle,
+		relatedConversions,
+		sourceName,
+		targetName
+	} from '$lib/seo/conversions';
+	import { conversionFaq, FORMAT_ABOUT, FORMAT_TIP } from '$lib/seo/copy';
+	import { conversionDiscordEmbed } from '$lib/seo/discord';
+	import { breadcrumbs, faqPage, webApplication } from '$lib/seo/jsonld';
+	import { conversionMeta, hubMeta } from '$lib/seo/pages';
 
 	let { data } = $props();
 
 	const conversion = $derived(data.conversion);
-	const source = $derived(seoName(conversion.from));
-	const target = $derived(seoName(conversion.to));
+	const meta = $derived(conversionMeta(conversion));
+	const hub = $derived(hubMeta(conversion.to));
+	const source = $derived(sourceName(conversion));
+	const target = $derived(targetName(conversion));
 	const name = $derived(conversionTitle(conversion));
-	const path = $derived(`/${conversion.slug}`);
 	const faq = $derived(conversionFaq(conversion));
-	const description = $derived(conversionDescription(conversion));
-	/** Conversions qui partagent le format source ou cible. */
-	const related = $derived(
-		CONVERSIONS.filter(
-			(other) =>
-				other.slug !== conversion.slug &&
-				(other.from === conversion.from || other.to === conversion.to)
-		).slice(0, 6)
+	const crumbs = $derived([
+		{ name: 'Convertio', path: '/' },
+		{ name: `Convertir en ${target}`, path: hub.path },
+		{ name, path: meta.path }
+	]);
+	/** Fiches des deux formats (le JFIF a sa propre présentation). */
+	const formats = $derived([
+		{ name: source, about: conversion.fromAbout ?? FORMAT_ABOUT[conversion.from] },
+		{ name: target, about: FORMAT_ABOUT[conversion.to] }
+	]);
+	const tips = $derived(
+		[...(conversion.tips ?? []), FORMAT_TIP[conversion.to]].filter((tip): tip is string => !!tip)
 	);
+	const related = $derived(relatedConversions(conversion, 8));
 	const steps = $derived([
 		{
-			title: `Choisissez « ${seoName(conversion.to)} »`,
+			title: `Choisissez « ${target} »`,
 			text: `Le format ${target} est déjà sélectionné. Ajustez au besoin la qualité ou les options.`
 		},
 		{
@@ -37,43 +52,28 @@
 		},
 		{
 			title: 'Téléchargez le résultat',
-			text: 'Récupérez chaque image ou toutes à la fois dans une archive ZIP.'
+			text: 'Récupérez chaque image ou toutes à la fois dans une archive ZIP. C’est gratuit, sans limite.'
 		}
 	]);
 </script>
 
 <Seo
-	title="Convertir {name} gratuitement, sans envoi — Convertio"
-	{description}
-	{path}
+	title={meta.title}
+	description={meta.description}
+	path={meta.path}
 	jsonLd={[
-		breadcrumbs([
-			{ name: 'Convertio', path: '/' },
-			{ name: `${source} en ${target}`, path }
-		]),
+		breadcrumbs(crumbs),
+		webApplication(meta.description, { name: `Convertisseur ${name}`, path: meta.path }),
 		faqPage(faq)
 	]}
+	discordEmbed={conversionDiscordEmbed(conversion)}
 />
 
-<nav aria-label="Fil d’Ariane" class="pt-6">
-	<ol role="list" class="flex items-center gap-x-2 text-sm text-gray-500 dark:text-gray-400">
-		<li>
-			<a href="/" class="hover:text-gray-700 dark:hover:text-gray-200">Convertio</a>
-		</li>
-		<li class="flex items-center gap-x-2">
-			<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-5 text-gray-300">
-				<path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-			</svg>
-			<a href={path} aria-current="page" class="font-medium text-gray-700 dark:text-gray-200">
-				{name}
-			</a>
-		</li>
-	</ol>
-</nav>
+<Breadcrumbs items={crumbs} />
 
-<Hero title="Convertir {name}">
-	Convertissez vos fichiers {source} en {target} directement dans votre navigateur : gratuit, sans inscription,
-	et vos images ne quittent jamais votre appareil.
+<Hero title={meta.h1}>
+	Convertissez vos fichiers {source} en {target} en quelques secondes, sans pub ni inscription. La conversion
+	se fait dans votre navigateur : vos images ne quittent jamais votre appareil.
 </Hero>
 
 <ConverterApp target={conversion.to} />
@@ -89,21 +89,31 @@
 		>
 			Pourquoi convertir vos fichiers {source} en {target} ?
 		</h2>
-		{#if conversion.note}
-			<p class="mt-4 text-base/7 text-gray-600 lg:text-lg/8 dark:text-gray-400">
-				{conversion.note}
-			</p>
+		<p class="mt-4 text-base/7 text-gray-600 lg:text-lg/8 dark:text-gray-400">{conversion.note}</p>
+		{#if tips.length}
+			<h3 class="mt-8 text-base font-semibold text-gray-900 dark:text-white">Bon à savoir</h3>
+			<ul role="list" class="mt-4 space-y-3">
+				{#each tips as tip (tip)}
+					<li class="flex gap-x-3 text-base/7 text-gray-600 dark:text-gray-400">
+						<Icon
+							name="check-circle-solid"
+							class="mt-1 size-5 flex-none text-indigo-600 dark:text-indigo-400"
+						/>
+						{tip}
+					</li>
+				{/each}
+			</ul>
 		{/if}
 	</div>
 	<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-0 lg:grid-cols-1">
-		{#each [conversion.from, conversion.to] as format (format)}
+		{#each formats as format (format.name)}
 			<div
 				class="rounded-lg bg-white p-5 shadow-xs outline-1 outline-gray-900/5 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
 			>
 				<h3 class="text-sm/6 font-semibold text-gray-900 dark:text-white">
-					Le format {seoName(format)}
+					Le format {format.name}
 				</h3>
-				<p class="mt-2 text-sm/6 text-gray-600 dark:text-gray-400">{FORMAT_ABOUT[format]}</p>
+				<p class="mt-2 text-sm/6 text-gray-600 dark:text-gray-400">{format.about}</p>
 			</div>
 		{/each}
 	</div>
@@ -135,24 +145,17 @@
 
 <Faq items={faq} />
 
-{#if related.length}
-	<section aria-labelledby="related-heading" class="mt-16 lg:mt-24">
-		<h2 id="related-heading" class="text-base font-semibold text-gray-900 dark:text-white">
-			Conversions associées
-		</h2>
-		<ul role="list" class="mt-4 flex flex-wrap gap-2">
-			{#each related as other (other.slug)}
-				<li>
-					<a
-						href="/{other.slug}"
-						class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20"
-					>
-						{seoName(other.from)}
-						<Icon name="arrow-down-solid" class="size-4 -rotate-90 text-gray-400" />
-						{seoName(other.to)}
-					</a>
-				</li>
-			{/each}
-		</ul>
-	</section>
-{/if}
+<section aria-labelledby="related-heading" class="mt-16 lg:mt-24">
+	<h2 id="related-heading" class="text-base font-semibold text-gray-900 dark:text-white">
+		Conversions associées
+	</h2>
+	<div class="mt-4"><ConversionLinks conversions={related} /></div>
+	<p class="mt-6 text-sm/6">
+		<a
+			href={hub.path}
+			class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+		>
+			Toutes les conversions en {target} <span aria-hidden="true">→</span>
+		</a>
+	</p>
+</section>

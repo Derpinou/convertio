@@ -16,7 +16,7 @@ export const OG_IMAGE = {
 	path: '/og-image.png',
 	width: 1200,
 	height: 630,
-	alt: 'Convertio — Convertissez vos images sans les envoyer nulle part'
+	alt: 'Convertio — Convertisseur d’images gratuit et sans pub'
 };
 
 /** `/heic-en-jpg` → `https://…/heic-en-jpg` ; `/` → `https://…/` */
