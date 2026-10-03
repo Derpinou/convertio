@@ -28,7 +28,7 @@
 <div class="flex min-h-full flex-col">
 	<Header />
 
-	<main class="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 sm:px-6 lg:px-8">
+	<main class="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
 		{@render children()}
 	</main>
 

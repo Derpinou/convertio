@@ -92,8 +92,9 @@ Le service worker n’est actif qu’avec `pnpm build && pnpm preview`, pas en m
 
 ## SEO et images
 
-- **URL du site** : les URL canoniques, Open Graph, le sitemap et le robots.txt utilisent la
-  variable d’environnement `VITE_SITE_URL` (ex. `https://convertio.example.com`), lue au build.
+- **URL du site** : `https://convertio.dromaderp.fr`, utilisée pour les URL canoniques, Open
+  Graph, le sitemap et le robots.txt (`src/lib/site.ts`). La variable d’environnement
+  `VITE_SITE_URL`, lue au build, permet de la remplacer (pour un fork, par exemple).
 - **Pages de conversion** : le catalogue est dans `src/lib/seo/conversions.ts`. Ajouter une entrée
   crée la page, l’ajoute au sitemap et au pied de page.
 - **Bannière de partage** (`static/og-image.png`, 1200 × 630) : sa source est
@@ -112,8 +113,7 @@ Importer un dépôt_, puis dans _Settings → Build_ :
 - commande de build : `pnpm build`
 - commande de déploiement : `npx wrangler deploy` (valeur par défaut)
 - répertoire racine : vide
-- variables de build : `NODE_VERSION=22`, `PNPM_VERSION=11.20.0` et `VITE_SITE_URL` (URL publique
-  du site)
+- variables de build : `NODE_VERSION=22` et `PNPM_VERSION=11.20.0`
 
 Le nom du Worker doit correspondre au champ `name` de `wrangler.toml` (`convertio`).
 
@@ -124,7 +124,7 @@ pnpm exec wrangler login
 ```
 
 ```bash
-VITE_SITE_URL=https://convertio.example.com pnpm deploy:cf
+pnpm deploy:cf
 ```
 
 Pour le sous-domaine : _Workers & Pages → convertio → Settings → Domains & Routes → Add →

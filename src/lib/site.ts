@@ -4,9 +4,9 @@ export const REPOSITORY_URL = 'https://github.com/Derpinou/convertio';
 
 /**
  * URL publique du site, sans « / » final : utilisée pour les URL canoniques, Open Graph et le
- * sitemap. À définir au build via la variable d'environnement `VITE_SITE_URL`.
+ * sitemap. La variable d'environnement `VITE_SITE_URL` permet de la remplacer au build (fork…).
  */
-export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://convertio.pages.dev').replace(
+export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://convertio.dromaderp.fr').replace(
 	/\/+$/,
 	''
 );

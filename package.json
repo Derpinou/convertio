@@ -1,6 +1,6 @@
 {
 	"name": "convertio",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"private": true,
 	"description": "Convertisseur de formats d'image 100 % local, dans le navigateur",
 	"license": "Apache-2.0",

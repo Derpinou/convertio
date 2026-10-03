@@ -26,7 +26,7 @@ moteur de conversion, le service worker ou l’interface ont changé.
   `convert/decode.ts`, un encodeur dans `convert/encode.ts`, un test aller-retour dans `tests/`.
 - SEO : chaque page passe par `<Seo>` (titre, description, canonique, Open Graph, JSON-LD).
   Les pages de conversion viennent du catalogue `src/lib/seo/conversions.ts` (texte propre à
-  chaque couple dans `note`) ; les URL absolues dépendent de `VITE_SITE_URL`. Accorder les
+  chaque couple dans `note`) ; les URL absolues dérivent de `SITE_URL` (`src/lib/site.ts`). Accorder les
   articles avec `withArticle` (« l’AVIF », « le JPG »).
 - Images : modifier `assets/og-image.html` puis lancer `pnpm generate-assets` (bannière + captures
   PWA, recompressées avec OxiPNG) plutôt que d’éditer les PNG.

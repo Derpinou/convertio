@@ -78,17 +78,24 @@
 
 <ConverterApp target={conversion.to} />
 
-<section aria-labelledby="why-heading" class="mt-16">
-	<h2
-		id="why-heading"
-		class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl dark:text-white"
-	>
-		Pourquoi convertir vos fichiers {source} en {target} ?
-	</h2>
-	{#if conversion.note}
-		<p class="mt-4 text-base/7 text-gray-600 dark:text-gray-400">{conversion.note}</p>
-	{/if}
-	<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+<section
+	aria-labelledby="why-heading"
+	class="mt-16 lg:mt-24 lg:grid lg:grid-cols-2 lg:items-start lg:gap-12"
+>
+	<div>
+		<h2
+			id="why-heading"
+			class="text-2xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-3xl dark:text-white"
+		>
+			Pourquoi convertir vos fichiers {source} en {target} ?
+		</h2>
+		{#if conversion.note}
+			<p class="mt-4 text-base/7 text-gray-600 lg:text-lg/8 dark:text-gray-400">
+				{conversion.note}
+			</p>
+		{/if}
+	</div>
+	<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-0 lg:grid-cols-1">
 		{#each [conversion.from, conversion.to] as format (format)}
 			<div
 				class="rounded-lg bg-white p-5 shadow-xs outline-1 outline-gray-900/5 dark:bg-gray-900 dark:shadow-none dark:outline-white/10"
@@ -102,14 +109,14 @@
 	</div>
 </section>
 
-<section aria-labelledby="howto-heading" class="mt-16">
+<section aria-labelledby="howto-heading" class="mt-16 lg:mt-24">
 	<h2
 		id="howto-heading"
 		class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl dark:text-white"
 	>
 		Convertir {name} en 3 étapes
 	</h2>
-	<ol role="list" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+	<ol role="list" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:mt-10 lg:gap-12">
 		{#each steps as step, i (step.title)}
 			<li>
 				<span
@@ -129,7 +136,7 @@
 <Faq items={faq} />
 
 {#if related.length}
-	<section aria-labelledby="related-heading" class="mt-16">
+	<section aria-labelledby="related-heading" class="mt-16 lg:mt-24">
 		<h2 id="related-heading" class="text-base font-semibold text-gray-900 dark:text-white">
 			Conversions associées
 		</h2>

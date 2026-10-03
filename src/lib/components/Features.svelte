@@ -21,9 +21,9 @@
 	];
 </script>
 
-<section aria-labelledby="features-heading" class="mt-16">
+<section aria-labelledby="features-heading" class="mt-16 lg:mt-24">
 	<h2 id="features-heading" class="sr-only">Pourquoi Convertio</h2>
-	<dl class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+	<dl class="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:gap-12">
 		{#each features as feature (feature.title)}
 			<div>
 				<dt class="flex items-center gap-x-3 text-sm/6 font-semibold text-gray-900 dark:text-white">
