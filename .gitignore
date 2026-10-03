@@ -1,0 +1,32 @@
+node_modules
+
+# Output
+/build
+/.svelte-kit
+/dev-dist
+.wrangler
+
+# Tests
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dev
+.idea
+.claude
+.vscode
+.cursor

@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@theme {
+	--font-sans:
+		'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+	body {
+		@apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-white;
+	}
+}
+
+/* Damier affiché derrière les vignettes pour rendre la transparence visible. */
+@utility bg-checkerboard {
+	background-color: var(--color-white);
+	background-image: conic-gradient(
+		var(--color-gray-200) 25%,
+		transparent 0 50%,
+		var(--color-gray-200) 0 75%,
+		transparent 0
+	);
+	background-size: 12px 12px;
+
+	@variant dark {
+		background-color: var(--color-gray-800);
+		background-image: conic-gradient(
+			var(--color-gray-700) 25%,
+			transparent 0 50%,
+			var(--color-gray-700) 0 75%,
+			transparent 0
+		);
+	}
+}
