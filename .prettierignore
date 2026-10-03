@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+pnpm-workspace.yaml
+build
+.svelte-kit
+dev-dist
+static
+tests/fixtures
+test-results
+playwright-report
